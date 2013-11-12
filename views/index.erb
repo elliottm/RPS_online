@@ -17,6 +17,10 @@
        <button data-pick='spock'>Pick <strong>Spock</strong></button>
      </ul>
 
+     <div id="results">
+       <p> Tally: </p>
+     </div>
+
      <h2 id='compick'> No computer pick yet </h2>
      <h3 id='playerpick'> You haven't picked </h3>
      <h4 id='change'> Winner: No game started </h4>
@@ -42,10 +46,27 @@
       } 
       else {
         jQuery("#change").html("Game result: the winner is " + game.winner().name + " and they picked " + game.winner().pick);
-      }
+      }      
+   
+      // var winner = game.winner();
+
+      $.post('/score', { winner: game.winner().name } );
+
+      $.get('/score',function(data) {
+        $( "#results" )
+          .append(" " + data );
+        console.log(data);
       });
 
+    });
 
+
+  </script>
+
+  <script> 
+   
+    
+  
   </script>
 
   </body>
