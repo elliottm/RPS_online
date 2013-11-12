@@ -30,8 +30,8 @@
 
   <script>
 
-    var Player1 = new Player(prompt("What is your name", "Type you name here"));
-    var Computer = new Player('computer');
+    var Player1 = new Player('Player');
+    var Computer = new Player('Computer');
     var game = new Game(Player1, Computer);
 
     jQuery('button').on('click', function() {
@@ -46,16 +46,20 @@
       } 
       else {
         jQuery("#change").html("Game result: the winner is " + game.winner().name + " and they picked " + game.winner().pick);
-      }      
+      }       
    
       // var winner = game.winner();
-
-      $.post('/score', { winner: game.winner().name } );
+      if(game.winner() == null) {
+        $.post('score', { winner: "Draw"} );
+      }
+      else { 
+        $.post('/score', { winner: game.winner().name } );
+      }
 
       $.get('/score',function(data) {
-        $( "#results" )
-          .append(" " + data );
-        console.log(data);
+        $( "#results p:first" )
+          .html(" " + data);
+        // console.log(data);
       });
 
     });

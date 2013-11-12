@@ -29,15 +29,41 @@ set :views, File.join(File.dirname(__FILE__), '..', 'views')
     Score.create(:winner => winner) 
   end
 
-  get '/score' do
-  	Score.last.winner
-  	puts "#{Score.last.winner}"
-  	Score.last.winner
+  get '/score' do 
+    
+    puts "#{winner_count_player}"
+    puts "#{winner_count_computer}"
+    winners
   end
 
+  helpers do
 
-  # start the server if ruby file executed directly
+	def winner_count_computer
+	  Score.count(:winner.like => "Computer").to_s
+	end
+
+	def winner_count_player
+	  Score.count(:winner.like => "Player").to_s
+	end
+
+	def winners
+		"Computer has won #{winner_count_computer} 
+		and Player has won #{winner_count_player}"
+    end
+  
+  end
+
   run! if app_file == $0
 end
+
+
+
+
+
+
+
+
+
+
 
 
