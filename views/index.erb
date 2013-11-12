@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+ 	<title>  Rock Paper Scissors </title>
+ 	<link href="application.css" rel="stylesheet" type="text/css">
+ </head>
+
+  <body>
+    <h1>Rock paper scissors</h1>
+    <h4> Choose your weapon: </h4>
+     <ul id="buttons">
+       <button data-pick='rock'>Pick <strong>Rock</strong></button>
+       <button data-pick='paper'>Pick <strong>Paper</strong></button>
+       <button data-pick='scissors'>Pick <strong>Scissors</strong></button>
+       <button data-pick='lizard'>Pick <strong>Lizard</strong></button>
+       <button data-pick='spock'>Pick <strong>Spock</strong></button>
+     </ul>
+
+     <h2 id='compick'> No computer pick yet </h2>
+     <h3 id='playerpick'> You haven't picked </h3>
+     <h4 id='change'> Winner: No game started </h4>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="RPS.js"></script> 
+
+  <script>
+
+    var Player1 = new Player(prompt("What is your name", "Type you name here"));
+    var Computer = new Player('computer');
+    var game = new Game(Player1, Computer);
+
+    jQuery('button').on('click', function() {
+      Computer.picksAI();
+      Player1.picks(jQuery(this).data('pick'));
+      
+      jQuery("#compick").html("The computer picked: " + Computer.pick);
+      jQuery("#playerpick").html("You picked: " + Player1.pick);
+      
+      if(game.winner() == null) {
+      	jQuery("#change").html("The game is a draw");
+      } 
+      else {
+        jQuery("#change").html("Game result: the winner is " + game.winner().name + " and they picked " + game.winner().pick);
+      }
+      });
+
+
+  </script>
+
+  </body>
+
+
+</html>
